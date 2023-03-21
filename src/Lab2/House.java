@@ -1,3 +1,5 @@
+package Lab2;
+
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
@@ -70,7 +72,7 @@ public class House extends JFrame implements GLEventListener {
         canvas.addGLEventListener(new House());
 
         // create the JFrame and add the GLCanvas to it
-        JFrame frame = new JFrame("House Example");
+        JFrame frame = new JFrame("Lab2.House Example");
         frame.getContentPane().add(canvas);
         frame.setSize(400, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -1,12 +1,20 @@
 import com.jogamp.opengl.*;
 import com.jogamp.opengl.awt.GLCanvas;
+import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.util.Animator;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serial;
 
-public class MainFrame extends JFrame implements GLEventListener
-{
+public class MainFrame extends JFrame implements GLEventListener{
+
+    /**
+     *
+     */
+    @Serial
+    private static final long serialVersionUID = 1L;
+
 
     public MainFrame()
     {
@@ -15,13 +23,14 @@ public class MainFrame extends JFrame implements GLEventListener
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        this.setSize(800, 600);
+        this.setSize(1000, 800);
 
         // This method will be explained later
-        // this.initializeJogl();
+        this.initializeJogl();
 
         this.setVisible(true);
     }
+
 
     private void initializeJogl()
     {
@@ -42,60 +51,114 @@ public class MainFrame extends JFrame implements GLEventListener
 
         // Adding an OpenGL event listener to the canvas.
         this.canvas.addGLEventListener(this);
-        Animator animator = new Animator();
-
-        animator.add(this.canvas);
-
-        animator.start();
     }
+
 
     private GLCanvas canvas;
-    public void init(GLAutoDrawable canvas)
-    {
-        return;
-    }
 
-    @Override
-    public void dispose(GLAutoDrawable glAutoDrawable) {
 
-    }
+    public void init(GLAutoDrawable drawable) {
 
-    public void display(GLAutoDrawable canvas) {
         GL2 gl = canvas.getGL().getGL2();
 
-        // Each time the scene is redrawn we clear the color buffers which is perceived by the user as clearing the scene.
 
-        // Set the color buffer to be filled with the color black when cleared.
-        // It can be defined in the init function (method) also.
+        // Activate the GL_LINE_SMOOTH state variable. Other options include
+        // GL_POINT_SMOOTH and GL_POLYGON_SMOOTH.
+        gl.glEnable(GL.GL_LINE_SMOOTH);
 
-        // Clear the color buffer.
-        gl.glClear(GL.GL_COLOR_BUFFER_BIT);
+        // Activate the GL_BLEND state variable. Means activating blending.
+        //gl.glEnable(GL.GL_BLEND);
 
+        // Set the blend function. For antialiasing it is set to GL_SRC_ALPHA for the source
+        // and GL_ONE_MINUS_SRC_ALPHA for the destination pixel.
+        gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
 
-        gl.glBegin(GL2.GL_POINTS);
-        // Set the vertex color to Red.
-        gl.glColor3f(1.0f, 0.0f, 0.0f);
-        gl.glVertex2f(0.2f, 0.2f);
-        // Set the vertex color to Green.
-        gl.glColor3f(0.0f, 1.0f, 0.0f);
-        gl.glVertex2f(0.4f, 0.2f);
-        // Set the vertex color to Blue.
-        gl.glColor3f(0.0f, 0.0f, 1.0f);
-        gl.glVertex2f(0.2f, 0.4f);
-        // Set the vertex color to White.
-        gl.glColor3f(1.0f, 1.0f, 1.0f);
-        gl.glVertex2f(0.4f, 0.4f);
-        gl.glEnd();
+        // Control GL_LINE_SMOOTH_HINT by applying the GL_DONT_CARE behavior.
+        // Other behaviours include GL_FASTEST or GL_NICEST.
+        gl.glHint(GL.GL_LINE_SMOOTH_HINT, GL.GL_DONT_CARE);
+        // Uncomment the following two lines in case of polygon antialiasing
+        //gl.glEnable(GL.GL_POLYGON_SMOOTH);
+        //glHint(GL_POLYGON_SMOOTH_HINT, GL_NICEST);
 
     }
 
-    public void reshape(GLAutoDrawable canvas, int left, int top, int width, int height)
-    {
-        return;
+
+
+
+
+
+    public void dispose(GLAutoDrawable drawable) {
+
     }
 
-    public void displayChanged(GLAutoDrawable canvas, boolean modeChanged, boolean deviceChanged)
-    {
-        return;
+
+    public void display(GLAutoDrawable drawable) {
+        // Retrieve a reference to a GL object. We need it because it contains all the useful OGL methods.
+        GL2 gl = canvas.getGL().getGL2();
+
+        // Do not render front-faced polygons.
+        gl.glCullFace(GL.GL_FRONT);
+        // Culling must be enabled in order to work.
+        gl.glEnable(GL.GL_CULL_FACE);
+
+        //gl.glPolygonMode(GL.GL_FRONT_AND_BACK, GL.GL_FILL);
+
+        // Define vertices in clockwise order (back-faced)
+
+
+        //gl.glBegin(GL2.GL_POLYGON);
+        //corpul casei
+        for(float i = 0f; i<= 1f; i=i+0.001f) {
+            gl.glBegin(GL2.GL_LINES);
+            gl.glColor3d(0.255, 0.168, 0.100);
+            gl.glVertex2d(-0.5, -1+i);
+            gl.glVertex2d(0.5, -1+i);
+            gl.glEnd();
+
+        }
+        //acoperis
+        for(float i = 0f; i<= 0.6f; i=i+0.001f) {
+            gl.glBegin(GL2.GL_LINES);
+            gl.glColor3d(0.788, 0.192, 0.192);
+            gl.glVertex2d(-0.6+i, i);
+            gl.glVertex2d(0.6-i, i);
+            gl.glEnd();
+        }
+
+        //fereastra
+        for(float i = 0f; i<= 0.3f; i=i+0.001f) {
+            gl.glBegin(GL2.GL_LINES);
+            gl.glColor3d(0, 0, 0);
+            gl.glVertex2d(-0.4, -0.4+i);
+            gl.glVertex2d(-0.1, -0.4+i);
+            gl.glEnd();
+        }
+        //lumina
+        for(float i = 0f; i<= 0.22f; i=i+0.01f) {
+            gl.glBegin(GL2.GL_LINES);
+            gl.glColor3d(1, 1, 0);
+            gl.glVertex2d(-0.36, -0.36+i);
+            gl.glVertex2d(-0.14, -0.36+i);
+            gl.glEnd();
+        }
+        //usa
+        for(float i = 0f; i<= 0.5f; i=i+0.001f) {
+            gl.glBegin(GL2.GL_LINES);
+            gl.glColor3d(0.255, 0.200, 0.233);
+            gl.glVertex2d(-0.15, -1+i);
+            gl.glVertex2d(0.15, -1+i);
+            gl.glEnd();
+        }
+
+
+
+    }
+
+
+
+
+
+    public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
+
     }
 }

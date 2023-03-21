@@ -1,3 +1,5 @@
+package Lab2;
+
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
@@ -53,7 +55,7 @@ public class Circle extends JFrame implements GLEventListener {
         canvas.addGLEventListener(new Circle());
 
         // create the JFrame and add the GLCanvas to it
-        JFrame frame = new JFrame("Circle Example");
+        JFrame frame = new JFrame("Lab2.Circle Example");
         frame.getContentPane().add(canvas);
         frame.setSize(400, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
