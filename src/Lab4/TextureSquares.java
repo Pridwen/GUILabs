@@ -23,6 +23,9 @@ public class TextureSquares implements GLEventListener {
 
     private final int WIDTH = 640;
     private final int HEIGHT = 480;
+    private float x = -0.5f;
+    private float y = 0.5f;
+    private float speed = 0.01f;
 
     public void run() {
         // Create the window
@@ -71,11 +74,11 @@ public class TextureSquares implements GLEventListener {
     public void display(GLAutoDrawable drawable) {
         GL2 gl = drawable.getGL().getGL2();
 
+        // Update the position of square 1
 
         gl.glViewport(0, 0, WIDTH, HEIGHT);
         gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);
-
 
         gl.glEnable(GL.GL_TEXTURE_2D);
 
@@ -84,13 +87,13 @@ public class TextureSquares implements GLEventListener {
         texture1.bind(gl);
         gl.glBegin(GL2.GL_QUADS);
         gl.glTexCoord2f(0.0f, 1.0f);
-        gl.glVertex3f(-0.5f, 0.5f, 0.0f);
+        gl.glVertex3f(x, y, 0.0f);
         gl.glTexCoord2f(1.0f, 1.0f);
-        gl.glVertex3f(-0.5f, -0.5f, 0.0f);
+        gl.glVertex3f(x, y - 1.0f, 0.0f);
         gl.glTexCoord2f(1.0f, 0.0f);
-        gl.glVertex3f(0.5f, -0.5f, 0.0f);
+        gl.glVertex3f(x + 1.0f, y - 1.0f, 0.0f);
         gl.glTexCoord2f(0.0f, 0.0f);
-        gl.glVertex3f(0.5f, 0.5f, 0.0f);
+        gl.glVertex3f(x + 1.0f, y, 0.0f);
         gl.glEnd();
 
         //square 2
@@ -108,11 +111,14 @@ public class TextureSquares implements GLEventListener {
         gl.glEnd();
 
         gl.glDisable(GL.GL_TEXTURE_2D);
+        x += speed;
+        if (x > 1.5f) {
+            x = -0.5f;
+        }
     }
 
     @Override
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
-        return;
     }
 
     private Texture loadTexture(GL2 gl, String filename) throws IOException {
