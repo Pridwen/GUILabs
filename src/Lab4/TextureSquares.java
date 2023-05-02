@@ -24,8 +24,8 @@ public class TextureSquares implements GLEventListener {
     private final int WIDTH = 640;
     private final int HEIGHT = 480;
     private float x = -0.5f;
-    private float y = 0.5f;
-    private float speed = 0.01f;
+    private float y = 1.0f;
+    private float speed = 0.007f;
 
     public void run() {
         // Create the window
@@ -111,9 +111,10 @@ public class TextureSquares implements GLEventListener {
         gl.glEnd();
 
         gl.glDisable(GL.GL_TEXTURE_2D);
+
         x += speed;
-        if (x > 1.5f) {
-            x = -0.5f;
+        if (x > 1.5f || x <= -1.5f){
+            speed *= -1;
         }
     }
 
